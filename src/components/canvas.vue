@@ -30,6 +30,8 @@ export default {
         const img = new Image();
         img.src = uploadImgSrc;
         img.onload = () => {
+          this.canvas.width = img.width;
+          this.canvas.height = img.height;
           this.ctx.drawImage(img, 0, 0);
         }
       }

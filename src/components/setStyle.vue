@@ -3,9 +3,9 @@
     <div>
       <div class="midashi">追加しよう</div>
       <input @change="selectedFile" type="file" accept="image/jpeg">
-      <div id="sc">
+      <ul id="sc">
         <styleInput></styleInput>
-      </div>
+      </ul>
       <button @click="appendNode">add</button>
     </div>
   </div>
@@ -21,7 +21,6 @@ export default {
   },
   methods: {
     selectedFile: function(e) {
-      // 選択された File の情報を保存しておく
       e.preventDefault();
       this.$store.commit("setImgPath", {imgPath:e.target.files[0]});
     },
@@ -54,6 +53,7 @@ button {
 }
 
 #sc {
+  list-style-type: none;
   height: 700px;
   overflow: auto;
 }

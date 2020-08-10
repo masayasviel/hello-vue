@@ -20,9 +20,6 @@ export default {
 <style scoped>
 div {
   display: flex;
-}
-
-cvs {
-  float: right;
+  flex-direction: row;
 }
 </style>
