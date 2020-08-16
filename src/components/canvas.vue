@@ -15,10 +15,14 @@ export default {
   mounted(){
     this.canvas = document.querySelector("#canvas");
     this.ctx = this.canvas.getContext("2d");
+    this.img = new Image();
   },
   computed: {
     setImgPath() {
       return this.$store.getters.imgPath;
+    },
+    writeText() {
+      return this.$store.getters.textData;
     }
   },
   watch: {
@@ -27,15 +31,20 @@ export default {
       const reader = new FileReader();
       reader.onload = () => {
         const uploadImgSrc = reader.result;
-        const img = new Image();
-        img.src = uploadImgSrc;
-        img.onload = () => {
-          this.canvas.width = img.width;
-          this.canvas.height = img.height;
-          this.ctx.drawImage(img, 0, 0);
+        this.img.src = uploadImgSrc;
+        this.img.onload = () => {
+          this.canvas.width = this.img.width;
+          this.canvas.height = this.img.height;
+          this.ctx.drawImage(this.img, 0, 0);
         }
       }
       reader.readAsDataURL(this.$store.getters.imgPath);
+    },
+    writeText() {
+      const data = this.$store.getters.textData;
+      for(let key in data) {
+        console.log(data[key]);
+      }
     }
   }
 }

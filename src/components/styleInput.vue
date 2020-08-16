@@ -1,6 +1,6 @@
 <template>
   <li class="node">
-    sample-n
+    sample{{ nodeNumber }}
     <ul>
       <li><input v-model.number="setNumber" type="number"></li>
       <li><input type="number"></li>
@@ -12,12 +12,16 @@
 </template>
 
 <script>
+import store from "../store.js"
+
 export default {
   data() {
     return {
-      inputNum: 114514
+      inputNum: 114514,
+      nodeNumber: this.nodeCount
     }
   },
+  props: ["nodeCount"],
   computed: {
     setNumber: {
       get() {
@@ -29,7 +33,8 @@ export default {
     }
   },
   methods: {
-    deleteSelf: function () {
+    deleteSelf() {
+      store.commit("deleteNode", {title: "node"+this.nodeNumber});
       this.$destroy();
       this.$el.parentNode.removeChild(this.$el);
     }

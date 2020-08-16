@@ -4,7 +4,7 @@
       <div class="midashi">追加しよう</div>
       <input @change="selectedFile" type="file" accept="image/jpeg">
       <ul id="sc">
-        <styleInput></styleInput>
+        <styleInput v-once :nodeCount="nodeCount"></styleInput>
       </ul>
       <button @click="appendNode">add</button>
     </div>
@@ -19,16 +19,31 @@ export default {
   components: {
     styleInput
   },
+  data() {
+    return {
+      nodeCount: 1
+    }
+  },
+  mounted() {
+    this.$store.commit("newNode", {nodeCount: this.nodeCount});
+    this.nodeCount++;
+  },
   methods: {
-    selectedFile: function(e) {
+    selectedFile(e) {
       e.preventDefault();
-      this.$store.commit("setImgPath", {imgPath:e.target.files[0]});
+      this.$store.commit("setImgPath", {imgPath: e.target.files[0]});
     },
     appendNode() {
       const ComponentClass = Vue.extend(styleInput);
-      const instance = new ComponentClass();
+      const instance = new ComponentClass({
+        propsData: {
+          nodeCount: this.nodeCount,
+        },
+      });
       instance.$mount();
-      document.querySelector("#sc").append(instance.$el);
+      document.getElementById("sc").appendChild(instance.$el);
+      this.$store.commit("newNode", {nodeCount: this.nodeCount});
+      this.nodeCount++;
     }
   }
 }
