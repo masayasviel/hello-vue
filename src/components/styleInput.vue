@@ -1,6 +1,6 @@
 <template>
   <li class="node">
-    sample{{ nodeNumber }}
+    {{ "sample" + nodeNumber }}
     <ul>
       <li><input v-model.number="setNumber" type="number"></li>
       <li><input type="number"></li>
@@ -71,7 +71,7 @@ export default {
 }
 
 .node:hover {
-  background-color: aqua;
+  border: double 5px;
 }
 
 .node:hover ul li:first-child{

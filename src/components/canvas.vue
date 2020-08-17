@@ -41,9 +41,14 @@ export default {
       reader.readAsDataURL(this.$store.getters.imgPath);
     },
     writeText() {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.drawImage(this.img, 0, 0);
       const data = this.$store.getters.textData;
       for(let key in data) {
         console.log(data[key]);
+        // this.ctx.fillStyle = data[key].color;
+        // this.ctx.font = data[key].fontSize + " " + data[key].fontFamily;
+        // this.ctx.fillText(data[key].text, data[key].x, data[key].y);
       }
     }
   }
