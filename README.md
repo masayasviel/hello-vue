@@ -3,7 +3,6 @@
 ## Project setup
 ```
 npm install
-npm install vuex babel-polyfill
 ```
 
 ### Compiles and hot-reloads for development
