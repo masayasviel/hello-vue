@@ -5,21 +5,21 @@
         <div class="acd-content">
             <div>hoge</div>
         </div>
-        <fileData :tmp="state.msg"/>
+        <fileData :contentList="state.contentList" @pickup-content="pickupContent"/>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, watch } from "vue";
+import { defineComponent, reactive, watch, PropType, SetupContext } from "vue";
 import fileData from "./textData.vue";
 
 type Props = {
-    message: string;
+    fileContent: string[];
 };
 
 type State = {
     IsOpenFilter: boolean;
-    msg: string;
+    contentList: string[];
 };
 
 export default defineComponent({
@@ -28,30 +28,34 @@ export default defineComponent({
         fileData
     },
     props: {
-        message: {
-            type: String,
-            default: "def"
+        fileContent: {
+            type: Array as PropType<string[]>,
+            default: []
         }
     },
-    setup(props: Props) {
+    setup(props: Props, context: SetupContext) {
         // property
         const state = reactive<State>({
             IsOpenFilter: false,
-            msg: props.message
+            contentList: props.fileContent
         });
         // method
-        function toggleIsOpenFilter(): void {
+        const toggleIsOpenFilter = () => {
             state.IsOpenFilter = !state.IsOpenFilter;
-        }
+        };
+        const pickupContent = (index: Event) => {
+            context.emit("pickup-content", index);
+        };
         // watcher
         watch(props, (newVal) =>{
-            state.msg = newVal.message;
+            state.contentList = newVal.fileContent;
         });
         return {
             // property
             state,
             // method
-            toggleIsOpenFilter
+            toggleIsOpenFilter,
+            pickupContent
         };
     }
 });
